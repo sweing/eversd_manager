@@ -65,7 +65,7 @@ class EverSDManagerWindow(QWidget):
         right_layout.addWidget(QLabel("Game Details:"))
         
         self.details_grid = QGridLayout()
-        right_layout.addLayout(self.details_grid)
+        right_layout.addLayout(self.details_grid, 1) # Add grid with stretch factor
 
         self.title_label = self.add_detail_row("Title:", 0)
         self.platform_label = self.add_detail_row("Platform:", 1)
@@ -74,6 +74,9 @@ class EverSDManagerWindow(QWidget):
         self.developer_label = self.add_detail_row("Developer:", 4)
         self.release_date_label = self.add_detail_row("Release Date:", 5)
         self.description_label = self.add_detail_row("Description:", 6, is_multiline=True)
+
+        # Set the description row to be vertically expandable
+        self.details_grid.setRowStretch(6, 1)
 
         # Image Previews
         image_layout = QHBoxLayout()
@@ -85,7 +88,6 @@ class EverSDManagerWindow(QWidget):
         image_layout.addWidget(self.create_image_group("Box Art", self.boxart_preview))
         image_layout.addWidget(self.create_image_group("Banner", self.banner_preview))
 
-        right_layout.addStretch()
         main_splitter.addWidget(right_widget)
         
         main_splitter.setSizes([300, 700]) # Initial size distribution
