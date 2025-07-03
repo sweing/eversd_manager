@@ -78,6 +78,9 @@ class AppController:
                 self.window.game_list.addItem(item)
 
             self.update_status(f"Found {len(games)} games.")
+            if self.window.game_list.count() > 0:
+                self.window.game_list.setCurrentRow(0)
+
         elif "Error" not in self.window.status_label.text():
             self.update_status("No games found. Add a new one!")
 
