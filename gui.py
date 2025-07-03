@@ -1,7 +1,7 @@
 
 import sys
 from PyQt5.QtWidgets import (QApplication, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
-                             QLabel, QLineEdit, QPushButton, QListWidget, QSplitter, QComboBox)
+                             QLabel, QLineEdit, QPushButton, QListWidget, QSplitter, QComboBox, QScrollArea)
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import Qt
 
@@ -98,11 +98,23 @@ class EverSDManagerWindow(QWidget):
         """Helper to add a row to the details grid."""
         label = QLabel(f"<b>{label_text}</b>")
         value = QLabel("N/A")
+        
         if is_multiline:
             value.setWordWrap(True)
             value.setAlignment(Qt.AlignTop)
-        self.details_grid.addWidget(label, row, 0)
-        self.details_grid.addWidget(value, row, 1)
+            
+            # Create and configure a scroll area
+            scroll_area = QScrollArea()
+            scroll_area.setWidget(value)
+            scroll_area.setWidgetResizable(True)
+            scroll_area.setFrameShape(QScrollArea.NoFrame) # Make it blend in
+            
+            self.details_grid.addWidget(label, row, 0)
+            self.details_grid.addWidget(scroll_area, row, 1)
+        else:
+            self.details_grid.addWidget(label, row, 0)
+            self.details_grid.addWidget(value, row, 1)
+            
         return value
 
     def create_image_preview_label(self, is_banner=False):
